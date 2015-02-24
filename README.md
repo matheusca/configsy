@@ -1,12 +1,11 @@
 # Configsy
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/configsy`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Configsy (config(uration) (ea)sy) help avoid duplicate method to load
+config files.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add in your Gemfile
 
 ```ruby
 gem 'configsy'
@@ -16,19 +15,54 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install configsy
-
 ## Usage
 
-TODO: Write usage instructions here
+Put your file into ```config/``` directory and than include module how
+described below.
 
-## Development
+```lang
+#My config file
+test: 'test'
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment. 
+```ruby
+class MyOwnClass
+  include Configsy
+  configsy :my_config_file
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+  def test
+    my_config_file.test
+  end
+end
+```
+
+Maybe the method create by default it's being use, so you might change the
+method name.
+
+```ruby
+class MyOwnClass
+  include Configsy
+  configsy :my_config_file, name: :config
+
+  def test
+    config.test
+  end
+end
+```
+
+By default Configsy has implemented YAML config extension, but you
+could implement your own config extension.
+
+```ruby
+class IniExtension < Configsy::Extension
+  extension :ini
+  config_values :values
+
+  def values
+    # Bring values config as hash.
+  end
+end
+```
 
 ## Contributing
 
