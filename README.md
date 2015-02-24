@@ -51,22 +51,21 @@ end
 ```
 
 By default Configsy has implemented YAML config extension, but you
-could implement your own config extension.
+could implement your own config adapter.
 
 ```ruby
-class IniExtension < Configsy::Extension
+class IniAdapter < Configsy::Adapter
   extension :ini
-  config_values :values
 
-  def values
-    # Bring values config as hash.
+  def load
+    # Your strategy to read config values.
   end
 end
 ```
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/configsy/fork )
+1. Fork it ( https://github.com/matheusca/configsy/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
